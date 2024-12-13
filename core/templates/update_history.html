@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedExpert | Doctor Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        /* Header and Navigation */
+        header {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo-section span {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .user-icons {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .notification-icon {
+            font-size: 1.25rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Profile Section */
+        .profile-icon {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .profile-icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.8);
+            transition: transform 0.2s;
+        }
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 120%;
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            width: 300px;
+            padding: 1.5rem;
+            z-index: 100;
+        }
+
+        .profile-icon:hover .profile-dropdown {
+            display: block;
+        }
+
+        .profile-dropdown h4 {
+            color: #1e293b;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .profile-dropdown p {
+            color: #64748b;
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+        }
+
+        .profile-dropdown a {
+            display: block;
+            margin-top: 1rem;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .profile-dropdown a:hover {
+            color: #1d4ed8;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            color: #1e293b;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        /* Appointment Cards */
+        .appointment-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .appointment-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+
+        .appointment-card h3 {
+            font-size: 1.25rem;
+            color: #2563eb;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .appointment-card h4 {
+            font-size: 1.1rem;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+        }
+
+        .appointment-card p {
+            font-size: 1rem;
+            color: #64748b;
+            margin: 0.5rem 0;
+        }
+
+        /* Status Tags */
+        .status-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin: 1rem 0;
+        }
+
+        .status-Scheduled {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .status-Accepted {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+
+        .status-Cancelled {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        /* Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-view-details {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .btn-view-details:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-accept {
+            background-color: #22c55e;
+            color: white;
+        }
+
+        .btn-accept:hover {
+            background-color: #16a34a;
+        }
+
+        .btn-cancel {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background-color: #dc2626;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            width: 90%;
+            max-width: 700px;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .modal-content h2 {
+            color: #1e293b;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.25rem;
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #64748b;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: #1e293b;
+        }
+
+        .patient-modal-details {
+            background-color: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .patient-modal-details h5 {
+            color: #1e293b;
+            margin: 1rem 0 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .patient-modal-details p {
+            margin: 0.75rem 0;
+        }
+
+        .patient-modal-details ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .patient-modal-details li {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .patient-modal-details li:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .modal-content {
+                margin: 10% 5%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo-section">
+                <i class="fas fa-heartbeat" style="font-size: 1.75rem;"></i>
+                <span>MedExpert</span>
+            </a>
+            <div class="user-icons">
+                <i class="fas fa-bell notification-icon"></i>
+                <div class="profile-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/512/9203/9203764.png" alt="Profile Icon">
+                    <div class="profile-dropdown">
+                        <h4>{{ profile.full_name }}</h4>
+                        <p><strong>License Number:</strong> {{ profile.license_number }}</p>
+                        <p><strong>Specialization:</strong> {{ profile.specialization }}</p>
+                        <p><strong>Hospital:</strong> {{ profile.hospital }}</p>
+                        <a href="#">View Full Profile →</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Welcome, Dr. {{ profile.full_name }}</h1>
+
+        <div class="appointment-card">
+            <h3>Upcoming Appointments</h3>
+            {% for detail in appointment_details %}
+                <div class="appointment-card">
+                    <h4>Appointment with {{ detail.patient_profile.full_name }}</h4>
+                    <p>Date: {{ detail.appointment.appointment_date|date:"Y-m-d H:i" }}</p>
+
+                    <button class="btn btn-view-details" onclick="openModal('modal-{{ detail.appointment.id }}')">
+                        View Patient Details
+                    </button>
+
+                    <div>
+                        <span class="status-tag status-{{ detail.appointment.status }}">
+                            {{ detail.appointment.status }}
+                        </span>
+                        
+                        <div class="action-buttons">
+                            {% if detail.appointment.status == "Scheduled" %}
+                                <form action="{% url 'core:accept_appointment' appointment_id=detail.appointment.id %}" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-accept">Accept</button>
+                                </form>
+                                <form action="{% url 'core:cancel_appointment' appointment_id=detail.appointment.id %}" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-cancel">Cancel</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div id="modal-{{ detail.appointment.id }}" class="modal">
+                        <div class="modal-content">
+                            <span class="close-modal" onclick="closeModal('modal-{{ detail.appointment.id }}')">&times;</span>
+                            <h2>Patient Details</h2>
+                            
+                            <div class="patient-modal-details">
+                                <p><strong>Name:</strong> {{ detail.patient_profile.full_name }}</p>
+                                <p><strong>Gender:</strong> {{ detail.patient_profile.gender }}</p>
+                                <p><strong>Age:</strong> {{ detail.patient_profile.age }}</p>
+                                <p><strong>Address:</strong> {{ detail.patient_profile.address }}</p>
+                                <p><strong>Medical History:</strong> {{ detail.patient_profile.medical_history }}</p>
+
+                                <h5>Reported Issues/Diseases:</h5>
+                                <ul>
+                                    {% for issue in detail.issues %}
+                                        <li>
+                                            <strong>Issue:</strong> {{ issue.description }}
+                                            {% if issue.report %}
+                                                <br>
+                                                <strong>Report:</strong> 
+                                                <a href="{{ issue.report.url }}" target="_blank" class="btn btn-view-details">
+                                                    View Report
+                                                </a>
+                                            {% endif %}
+                                        </li>
+                                    {% empty %}
+                                        <li>No reported issues or diseases.</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No appointments available at the moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.getElementsByClassName('modal');
+                for (let modal of modals) {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

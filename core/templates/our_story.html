@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinical Concept Mapping Recommendation System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.45/vue.global.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <div id="app" class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-blue-800 mb-4">
+                Clinical Concept Mapping Recommendation System
+            </h1>
+            <p class="text-xl text-gray-600">
+                Advanced AI-Powered Medical Concept Recommendation Platform
+            </p>
+        </header>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h2 class="text-2xl font-semibold text-blue-700 mb-4">
+                    Project Overview
+                </h2>
+                <ul class="space-y-3 text-gray-700">
+                    <li class="flex items-start">
+                        <svg class="w-6 h-6 text-blue-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                        <span>Advanced machine learning recommendation system for clinical concept mapping</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-6 h-6 text-blue-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 01-4.176-3.97L9.953 7.027a2 2 0 00-1.665-1.51l-2.007-.18a2 2 0 00-2.18 2.18l.181 2.007a2 2 0 001.509 1.664l2.171.433a6 6 0 004.176 3.97l.962.194a2 2 0 001.748-2.144l-.26-2.260z"></path>
+                        </svg>
+                        <span>Semantic relationship discovery in medical terminologies</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-6 h-6 text-blue-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>Enhanced clinical decision support through intelligent concept mapping</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h2 class="text-2xl font-semibold text-blue-700 mb-4">
+                    Technical Architecture
+                </h2>
+                <div class="space-y-3 text-gray-700">
+                    <div class="flex items-center">
+                        <span class="mr-3 text-blue-600 font-bold">Backend:</span>
+                        <span>Python, Django, FastAPI</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="mr-3 text-blue-600 font-bold">ML Framework:</span>
+                        <span>PyTorch, Transformers, Scikit-learn</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="mr-3 text-blue-600 font-bold">Database:</span>
+                        <span>PostgreSQL, Neo4j (Graph Database)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="mr-3 text-blue-600 font-bold">Frontend:</span>
+                        <span>Vue.js, Tailwind CSS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 bg-white shadow-lg rounded-lg p-6">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-6 text-center">
+                Project Roadmap
+            </h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold text-blue-800 mb-3">Phase 1: Research & Design</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>Literature review</li>
+                        <li>Medical ontology analysis</li>
+                        <li>Initial data collection</li>
+                    </ul>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold text-blue-800 mb-3">Phase 2: Development</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>ML model architecture</li>
+                        <li>Feature engineering</li>
+                        <li>Initial prototype</li>
+                    </ul>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold text-blue-800 mb-3">Phase 3: Validation</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>Clinical expert review</li>
+                        <li>Performance testing</li>
+                        <li>Iterative improvements</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-12 text-center text-gray-500">
+            © 2024 Clinical Concept Mapping Recommendation System
+        </footer>
+    </div>
+
+    <script>
+        const { createApp } = Vue
+
+        createApp({
+            data() {
+                return {
+                    projectName: 'Clinical Concept Mapping Recommendation System'
+                }
+            },
+            methods: {
+                initializeProject() {
+                    console.log(`Initializing ${this.projectName}...`)
+                }
+            },
+            mounted() {
+                this.initializeProject()
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

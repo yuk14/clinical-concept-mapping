@@ -1,0 +1,10 @@
+# requirements.txt
+Django=="*"
+Pillow==10.1.0
+django-crispy-forms==2.1
+python-dotenv==1.0.0
+djongo = "==1.3.6"
+python-dotenv = "*"
+djoser = "*"
+pymongo ="3.12.3"
+pytz = "*"

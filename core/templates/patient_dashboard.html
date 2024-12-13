@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+/* Modern Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: url('https://img.freepik.com/free-vector/technology-medical-infographic_23-2148490035.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #2e0d0d;
+    line-height: 1.6;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Transparent Overlay */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7); /* Adjust transparency here */
+    z-index: -1; /* Places it behind the content */
+}
+
+        /* Enhanced Header & Navigation */
+        header {
+            background: linear-gradient(135deg, #0c180c, #313304);
+            color: rgb(53, 22, 22);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 30px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        nav a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* User Icons Container */
+        .user-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Bell Icon Styling */
+        .notification-icon {
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .notification-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Improved Profile Dropdown */
+        .profile-icon {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .profile-icon img {
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.8);
+            transition: transform 0.2s;
+        }
+        .profile-icon:hover img {
+            transform: scale(1.05);
+        }
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+            z-index: 1;
+            width: 280px;
+            padding: 20px;
+            margin-top: 10px;
+        }
+        .profile-icon:hover .profile-dropdown {
+            display: block;
+            animation: fadeIn 0.2s ease-out;
+        }
+        .profile-dropdown h4 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        .profile-dropdown p {
+            color: #555;
+            margin: 8px 0;
+            font-size: 0.95em;
+        }
+        .profile-dropdown a {
+            display: block;
+            margin-top: 15px;
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Main Content Styling */
+        
+
+        .container {
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Appointment Cards */
+        .appointment-card {
+            background-color: rgb(43, 29, 29);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .appointment-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            font-weight: 600;
+        }
+        .section {
+    background: rgba(27, 2, 2, 0.1); /* Semi-transparent white background */
+    background-image: linear-gradient(135deg, rgba(116, 93, 93, 0.1), rgba(225, 16, 16, 0.3));
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 12px rgba(250, 201, 201, 0.1); /* Slight shadow for depth */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    transition: transform 0.2s;
+}
+
+.logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo-section span {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+        }
+        .section h3 {
+            color: #eeb008;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            font-weight: 600;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        /* Lists Styling */
+        .appointment-list, .doctor-list, .issues {
+            list-style: none;
+            padding: 0;
+        }
+        .appointment-list li, .doctor-list li {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s;
+        }
+        .appointment-list li:hover, .doctor-list li:hover {
+            background-color: #f8f9fa;
+        }
+        .appointment-list li:last-child, .doctor-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Form Elements */
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        textarea, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 2px rgba(76,175,80,0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #e55704;
+        }
+
+        /* Status Tags */
+        .status-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+        .status-scheduled {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        .status-completed {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        .status-cancelled {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .profile-dropdown {
+                width: 100%;
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo-section">
+                <i class="fas fa-heartbeat" style="font-size: 1.75rem;"></i>
+                <span>MedExpert</span>
+            </a>
+                <div class="user-icons">
+                    <i class="fas fa-bell notification-icon"></i>
+                    <div class="profile-icon">
+                        <img src="https://cdn-icons-png.flaticon.com/512/9203/9203764.png" alt="Profile Icon" width="40" height="40">
+                        <div class="profile-dropdown">
+                            <h4>{{ profile.full_name }}</h4>
+                            <p><strong>Gender:</strong> {{ profile.gender }}</p>
+                            <p><strong>Age:</strong> {{ profile.age }}</p>
+                            <p><strong>Address:</strong> {{ profile.address }}</p>
+                            <a href="{% url 'core:edit_profile' %}">Edit Profile →</a>
+                        </div>
+                    </div>
+                    <a href="{% url 'core:logout' %}" class="text-white text-decoration-none">
+                        <button type="button" class="btn btn-danger">
+                            Logout
+                        </button>
+                    </a>
+                    
+                    
+                    
+                </div>
+
+                
+        </nav>
+
+    </header>
+
+    <div class="container">
+        <h1>Welcome, {{ profile.full_name }}</h1>
+
+        <div class="section">
+            <h3>Medical History</h3>
+            <p>{{ profile.medical_history }}</p>
+        </div>
+
+        <div class="section">
+            <h3>Current Issues / Diseases</h3>
+            <ul class="issues">
+                {% if issues %}
+                    {% for issue in issues %}
+                        <li>
+                            <strong>Issue:</strong> {{ issue.description }}<br>
+                            {% if issue.report %}
+                                <strong>Report:</strong> <a href="{{ issue.report.url }}" target="_blank">View Report →</a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <p>No reported issues or diseases.</p>
+                {% endif %}
+            </ul>
+        
+            <form action="{% url 'core:add_issue' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="description">Issue/Disease:</label>
+                <textarea id="description" name="description" required></textarea>
+        
+                <label for="report">Upload Report (optional):</label>
+                <input type="file" id="report" name="report">
+        
+                <button type="submit">Add Issue</button>
+            </form>
+        </div>
+        
+
+<!-- Appointment List Section -->
+<div class="section">
+    <h3>Your Appointments</h3>
+    {% if appointments %}
+        <ul class="appointment-list">
+            {% for appointment in appointments %}
+                <li>
+                    <strong>Doctor:</strong> Dr. {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}<br>
+                    <strong>Specialization:</strong> {{ appointment.doctor.specialization }}<br>
+                    <strong>Date:</strong> {{ appointment.appointment_date|date:"F j, Y, H:i" }}<br>
+                    <strong>Status:</strong> 
+                    <span class="status-tag status-{{ appointment.status|lower }}">
+                        {{ appointment.status }}
+                    </span><br>
+                    {% if appointment.status == 'Scheduled' %}
+                        <a href="{% url 'core:cancel_appointment' appointment.id %}">Cancel Appointment</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No upcoming appointments.</p>
+    {% endif %}
+</div>
+
+
+<div class="section">
+    <h3>Doctors Related to Your Issues</h3>
+    {% if doctors %}
+        <ul class="doctor-list">
+            {% for doctor in doctors %}
+                <li>
+                    <strong>Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</strong><br>
+                    <strong>Specialization:</strong> {{ doctor.specialization }}<br>
+                    <strong>Hospital:</strong> {{ doctor.hospital }}<br>
+                    <a href="{% url 'core:book_appointment' doctor.user.id %}">Book Appointment →</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No doctors related to your issues are available.</p>
+    {% endif %}
+</div>
+
+        
+    </div>
+    <div class=" container fs-2 fw-bold">
+         <!-- Prescribed Medications Section -->
+         
+ 
+    <ul class="section fs-2 fw-bold"><h3>Prescribed Medications:</h3> <br> 
+        
+        {% for medication in medications %}
+           <li>
+                <strong>Medication:</strong> {{ medication.name }}<br>
+                <strong>Dosage:</strong> {{ medication.dosage }}<br>
+                <strong>Frequency:</strong> {{ medication.frequency }}<br>
+                <strong>Instructions:</strong> {{ medication.instructions }}
+            </li>
+        {% empty %}
+            <li>No medications prescribed.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Bootstrap JS & Dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gyb7r5KkXduTWIqCiJ2zqJYfi/vPzk9F8/50xqZ2hhYWhQh3M8" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0u7Mvf6pHbfO4D6gH5sZ5R6vzwWcUqbmFwiXOBkmy05EJmgn" crossorigin="anonymous"></script>
+</body>
+</html>

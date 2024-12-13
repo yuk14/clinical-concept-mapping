@@ -1,0 +1,29 @@
+# templates/core/dashboard.html
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-4">Welcome, {{ user.username }}!</h1>
+    
+    {% if user.role == 'doctor' %}
+        <div class="bg-white shadow-lg rounded-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Doctor Dashboard</h2>
+            <p>License Number: {{ user.doctor_profile.license_number }}</p>
+            <p>Specialization: {{ user.doctor_profile.specialization }}</p>
+            <p>Hospital: {{ user.doctor_profile.hospital }}</p>
+        </div>
+    {% elif user.role == 'scientist' %}
+        <div class="bg-white shadow-lg rounded-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Scientist Dashboard</h2>
+            <p>Research Area: {{ user.scientist_profile.research_area }}</p>
+            <p>Institution: {{ user.scientist_profile.institution }}</p>
+        </div>
+    {% elif user.role == 'patient' %}
+        <div class="bg-white shadow-lg rounded-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Patient Dashboard</h2>
+            <p>Gender: {{ user.patient_profile.gender }}</p>
+            <p>Age: {{ user.patient_profile.age }}</p>
+            <p>Medical History: {{ user.patient_profile.medical_history }}</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

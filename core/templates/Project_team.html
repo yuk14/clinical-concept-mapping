@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinical Concept Mapping Team</title>
+    <!-- Font Awesome for the home icon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a5f7a;
+            --secondary-color: #159895;
+            --accent-color: #57c5b6;
+            --text-color: #ffffff;
+            --bg-gradient-start: #136f7e;
+            --bg-gradient-end: #0e4d5c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            line-height: 1.6;
+            color: var(--text-color);
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .team-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-member {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.125);
+        }
+
+        .team-member:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        .member-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            filter: grayscale(20%) brightness(0.9);
+            transition: all 0.4s ease;
+        }
+
+        .team-member:hover .member-image {
+            filter: grayscale(0%) brightness(1);
+            transform: scale(1.05);
+        }
+
+        .member-details {
+            padding: 1.5rem;
+            text-align: center;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .member-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .member-role {
+            color: var(--secondary-color);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .member-bio {
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        .project-info {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.125);
+            color: var(--text-color);
+            text-align: center;
+            padding: 3rem;
+            margin-top: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .project-links {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .project-link {
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 10px 20px;
+            border-radius: 25px;
+            background-color: var(--secondary-color);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .project-link:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Details Overlay */
+        .team-member .details-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .team-member:hover .details-overlay {
+            opacity: 1;
+        }
+
+        .team-member .details-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent-color);
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="team-container">
+        <div class="team-grid">
+
+                        <!-- Team Member 1 -->
+                        <div class="team-member">
+                            <img src="/static/images/siri2.png" alt="Sarah Patel" class="member-image">
+                            <div class="details-overlay">
+                                <h3>Siri</h3>
+                                <p>UX/UI designer creating intuitive interfaces for clinical concept mapping tools.</p>
+                                <div class="social-icons">
+                                    <a href="mailto:sarah.patel@clinicalmap.com" class="fab">📧</a>
+                                    <a href="https://www.linkedin.com/in/sarahpatel" class="fab">🔗</a>
+                                    <a href="tel:+1567890123" class="fab">📱</a>
+                                </div>
+                            </div>
+                            <div class="member-details">
+                                <div class="member-name">Siri</div>
+                                <div class="member-role">Project Leader</div>
+                                <div class="member-bio">Designing user-centric interfaces for complex clinical mapping solutions advanced machine learning.</div>
+                            </div>
+                        </div>
+
+                                    <!-- Team Member 2-->
+            <div class="team-member">
+                <img src="/static/images/ss.png" alt="Alex Chen" class="member-image">
+                <div class="details-overlay">
+                    <h3>Shreyas Krishna</h3>
+                    <p>Innovative software architect specializing in advanced machine learning for clinical concept mapping.</p>
+                    <div class="social-icons">
+                        <a href="mailto:alex.chen@clinicalmap.com" class="fab">📧</a>
+                        <a href="https://www.linkedin.com/in/alexchen" class="fab">🔗</a>
+                        <a href="tel:+1987654321" class="fab">📱</a>
+                    </div>
+                </div>
+                <div class="member-details">
+                    <div class="member-name">Shreyas Krishna</div>
+                    <div class="member-role">Project Member</div>
+                    <div class="member-bio">Developing cutting-edge algorithms for intelligent clinical concept mapping.</div>
+                </div>
+            </div>
+
+            <!-- Team Member 3 -->
+            <div class="team-member">
+                <img src="/static/images/yukti.png" alt="Emily Rodriguez" class="member-image">
+                <div class="details-overlay">
+                    <h3>Yukthi</h3>
+                    <p>Expert in strategic project management with a track record of delivering complex clinical concept mapping solutions.</p>
+                    <div class="social-icons">
+                        <a href="mailto:emily.rodriguez@clinicalmap.com" class="fab">📧</a>
+                        <a href="https://www.linkedin.com/in/emilyrodriguez" class="fab">🔗</a>
+                        <a href="tel:+1234567890" class="fab">📱</a>
+                    </div>
+                </div>
+                <div class="member-details">
+                    <div class="member-name">Yukthi</div>
+                    <div class="member-role">Project Member</div>
+                    <div class="member-bio">Leading innovative approaches in clinical concept mapping research and implementation.</div>
+                </div>
+            </div>
+
+
+
+
+
+            <!-- Team Member 4 -->
+            <div class="team-member">
+                <img src="/static/images/shreya.png" alt="Michael Thompson" class="member-image">
+                <div class="details-overlay">
+                    <h3>Shreya</h3>
+                    <p>Data science expert specializing in advanced analytics for clinical concept mapping.</p>
+                    <div class="social-icons">
+                        <a href="mailto:michael.thompson@clinicalmap.com" class="fab">📧</a>
+                        <a href="https://www.linkedin.com/in/michaelthompson" class="fab">🔗</a>
+                        <a href="tel:+1456789012" class="fab">📱</a>
+                    </div>
+                </div>
+                <div class="member-details">
+                    <div class="member-name">Shreya</div>
+                    <div class="member-role">Project Member</div>
+                    <div class="member-bio">Transforming clinical data into meaningful, actionable insights intelligent clinical concept mapping.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-info">
+            <h2 class="project-title">Recommendation System for Clinical Concept Mapping</h2>
+            <p>Our innovative project develops an advanced AI-powered recommendation system that revolutionizes clinical concept mapping, enabling healthcare professionals to navigate complex medical relationships with unprecedented precision and insight.</p>
+            
+            <div class="project-links">
+                <a href="https://github.com/clinicalmap-project/recommendation-system" class="project-link" target="_blank">
+                    🐱 GitHub Repository
+                </a>
+                <a href="https://www.linkedin.com/company/clinicalmap-project" class="project-link" target="_blank">
+                    🌐 Project Page
+                </a>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+
+    <script>
+        // Interactive hover effects
+        const teamMembers = document.querySelectorAll('.team-member');
+        teamMembers.forEach(member => {
+            member.addEventListener('mouseenter', () => {
+                member.style.transform = 'scale(1.02)';
+            });
+            member.addEventListener('mouseleave', () => {
+                member.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

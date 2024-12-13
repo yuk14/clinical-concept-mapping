@@ -1,0 +1,25 @@
+<!-- generate_report.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Report</title>
+</head>
+<body>
+    <h2>Generate Report for Appointment</h2>
+
+    <h3>Appointment Details</h3>
+    <p><strong>Patient:</strong> {{ appointment.patient.full_name }}</p>
+    <p><strong>Appointment Date:</strong> {{ appointment.appointment_date }}</p>
+    <p><strong>Status:</strong> {{ appointment.status }}</p>
+
+    <p>Here you can add additional details to generate the report...</p>
+
+    <!-- Add a button to generate and download the report if necessary -->
+    <form action="{% url 'core:generate_report' appointment.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Generate Report</button>
+    </form>
+</body>
+</html>

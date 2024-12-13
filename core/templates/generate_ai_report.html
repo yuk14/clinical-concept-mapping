@@ -1,0 +1,31 @@
+<!-- generate_ai_report.html -->
+<html>
+<head>
+    <title>AI Generated Report</title>
+</head>
+<body>
+    <h1>AI Generated Report for {{ report_data.patient_name }}</h1>
+    <p><strong>Age:</strong> {{ report_data.age }}</p>
+    <p><strong>Predicted Disease:</strong> {{ report_data.predicted_disease }}</p>
+    <p><strong>Symptoms:</strong> {{ report_data.symptoms }}</p>
+    <p><strong>Recommended Treatment:</strong> {{ report_data.recommended_treatment }}</p>
+    
+    <h2>Appointments:</h2>
+    <ul>
+        {% for appointment in report_data.appointments %}
+            <li>{{ appointment.appointment_date }} with {{ appointment.doctor.full_name }}</li>
+        {% empty %}
+            <li>No appointments found.</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Medical History:</h2>
+    <ul>
+        {% for history in report_data.history %}
+            <li>{{ history.history_text }}</li>
+        {% empty %}
+            <li>No medical history found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+    "diabetes": {
+        "base_risk": "Moderate",
+        "risk_factors": ["High blood sugar", "Family history", "Obesity"],
+        "recommended_actions": ["Regular blood sugar monitoring", "Consult endocrinologist", "Dietary management"]
+    },
+    "hypertension": {
+        "base_risk": "High", 
+        "risk_factors": ["High salt intake", "Stress", "Sedentary lifestyle"],
+        "recommended_actions": ["Blood pressure monitoring", "Lifestyle changes", "Medication consultation"]
+    },
+    "default": {
+        "base_risk": "Low",
+        "risk_factors": ["General health assessment recommended"],
+        "recommended_actions": ["Consult with primary care physician"]
+    }
+}

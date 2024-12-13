@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    body {
+      background: linear-gradient(135deg, #020927 0%, #d0b0f0 100%);
+      font-family: 'Inter', sans-serif;
+    }
+    .glass-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    .social-btn {
+      transition: all 0.3s ease;
+      transform: scale(1);
+    }
+    .social-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    .input-glow:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+    }
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #ffffff;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .divider:not(:empty)::before {
+      margin-right: 0.25em;
+    }
+    .divider:not(:empty)::after {
+      margin-left: 0.25em;
+    }
+  </style>
+</head>
+<body class="h-screen flex items-center justify-center p-4">
+  <div class="glass-container p-8 rounded-xl shadow-lg w-full max-w-lg">
+    <h2 class="text-4xl font-bold text-center text-white mb-6">
+      <i class="fas fa-user-plus text-indigo-300"></i> Create Account
+    </h2>
+
+    <!-- Social Media Login -->
+    <div class="flex justify-center space-x-4 mb-6">
+      <a href="#" class="social-btn bg-white bg-opacity-20 p-3 rounded-full text-white hover:bg-opacity-30">
+        <i class="fab fa-google text-2xl"></i>
+      </a>
+      <a href="#" class="social-btn bg-white bg-opacity-20 p-3 rounded-full text-white hover:bg-opacity-30">
+        <i class="fab fa-facebook-f text-2xl"></i>
+      </a>
+      <a href="#" class="social-btn bg-white bg-opacity-20 p-3 rounded-full text-white hover:bg-opacity-30">
+        <i class="fab fa-github text-2xl"></i>
+      </a>
+      <a href="#" class="social-btn bg-white bg-opacity-20 p-3 rounded-full text-white hover:bg-opacity-30">
+        <i class="fab fa-apple text-2xl"></i>
+      </a>
+    </div>
+
+    <div class="divider text-sm mb-6">or Sign Up with Email</div>
+
+    <form action="{% url 'core:signup' %}" method="POST" class="space-y-4">
+      {% csrf_token %}
+
+      <!-- Full Name -->
+      <div>
+        <label for="name" class="block text-sm font-medium text-white mb-2">Full Name</label>
+        <div class="relative">
+          <input type="text" id="name" name="name" required 
+                 class="input-glow w-full p-3 pl-10 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-gray-300 focus:outline-none">
+          <i class="fas fa-user absolute top-3 left-3 text-white text-opacity-50"></i>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-white mb-2">Email</label>
+        <div class="relative">
+          <input type="email" id="email" name="email" required 
+                 class="input-glow w-full p-3 pl-10 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-gray-300 focus:outline-none">
+          <i class="fas fa-envelope absolute top-3 left-3 text-white text-opacity-50"></i>
+        </div>
+      </div>
+
+      <!-- Role Selection -->
+      <div>
+        <label for="role" class="block text-sm font-medium text-white mb-2">Role</label>
+        <select id="role" name="role" required 
+                class="input-glow w-full p-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white focus:outline-none">
+          <option value="" class="bg-gray-800">Select Role</option>
+          <option value="doctor" class="bg-gray-800">Doctor</option>
+          <option value="patient" class="bg-gray-800">Patient</option>
+          <option value="scientist" class="bg-gray-800">Scientist</option>
+        </select>
+      </div>
+
+      <!-- Dynamic Role Fields (Same as before, but with updated styling) -->
+      <div id="doctor-fields" class="hidden space-y-4">
+        <input type="text" name="license_number" placeholder="License Number" 
+               class="input-glow w-full p-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-gray-300 focus:outline-none">
+        <input type="text" name="specialization" placeholder="Specialization" 
+               class="input-glow w-full p-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-gray-300 focus:outline-none">
+        <input type="text" name="hospital" placeholder="Hospital" 
+               class="input-glow w-full p-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-gray-300 focus:outline-none">
+      </div>
+
+      <!-- Similar styling updates for scientist and patient fields -->
+      <div id="scientist-fields" class="hidden space-y-4">
+        <input type="text" name="research_area" placeholder="Research Area" 
+               class="input-glow w-full p-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-gray-300 focus:outline-none">
+        <input type="text" name="institution" placeholder="Institution" 
+               class="input-glow w-full p-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-gray-300 focus:outline-none">
+      </div>
+
+      <div id="patient-fields" class="hidden space-y-4">
+        <select name="gender" 
+                class="input-glow w-full p-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white focus:outline-none">
+          <option value="" class="bg-gray-800">Select Gender</option>
+          <option value="male" class="bg-gray-800">Male</option>
+          <option value="female" class="bg-gray-800">Female</option>
+        </select>
+        <input type="number" name="age" placeholder="Age" 
+               class="input-glow w-full p-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-gray-300 focus:outline-none">
+        <textarea name="address" placeholder="Address" 
+                  class="input-glow w-full p-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-gray-300 focus:outline-none"></textarea>
+        <textarea name="medical_history" placeholder="Medical History" 
+                  class="input-glow w-full p-3 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-gray-300 focus:outline-none"></textarea>
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label class="block text-sm font-medium text-white mb-2">Password</label>
+        <div class="relative">
+          <input type="password" id="password" name="password" required 
+                 pattern="^(?=.*[a-zA-Z]{4,})(?=.*\d)(?=.*[@])[A-Za-z\d@]{8,}$" 
+                 title="Password must be at least 8 characters long, contain 4 letters, include a number, and an '@' symbol."
+                 class="input-glow w-full p-3 pl-10 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 text-white placeholder-gray-300 focus:outline-none">
+          <i class="fas fa-lock absolute top-3 left-3 text-white text-opacity-50"></i>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" 
+              class="w-full bg-indigo-600 text-white font-semibold p-3 rounded-lg hover:bg-indigo-500 transition ease-in-out duration-300 transform hover:scale-[1.02] active:scale-95">
+        <i class="fas fa-paper-plane"></i> Create Account
+      </button>
+
+      <!-- Login Link -->
+      <div class="text-center text-white mt-4">
+        Already have an account? 
+        <a href="{% url 'core:signin' %}" class="text-indigo-300 hover:text-indigo-200 transition duration-200">Sign In here</a>.
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const roleSelect = document.getElementById('role');
+    const doctorFields = document.getElementById('doctor-fields');
+    const scientistFields = document.getElementById('scientist-fields');
+    const patientFields = document.getElementById('patient-fields');
+
+    roleSelect.addEventListener('change', function() {
+      doctorFields.classList.add('hidden');
+      scientistFields.classList.add('hidden');
+      patientFields.classList.add('hidden');
+      
+      if (this.value === 'doctor') doctorFields.classList.remove('hidden');
+      else if (this.value === 'scientist') scientistFields.classList.remove('hidden');
+      else if (this.value === 'patient') patientFields.classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>

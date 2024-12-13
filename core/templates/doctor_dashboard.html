@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedExpert | Doctor Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+    --primary-color: #2563eb;
+    --secondary-color: #1e293b;
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+/* Body Styling */
+body {
+    background-image: url('https://miro.medium.com/v2/resize:fit:1400/1*-s64elr2Rxv1xCbrxFdPQg.png'); /* Replace with your actual image URL */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Keeps background fixed while scrolling */
+    font-family: 'Roboto', sans-serif; /* Professional font */
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* For Font consistency across elements */
+h1, h2, h3, h4, h5, h6, p {
+    font-family: 'Roboto', sans-serif;
+}
+
+
+        .prescription-form {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      background: white;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .prescription-form {
+        padding: 1rem;
+        margin: 1rem;
+      }
+    }
+
+
+        /* Header and Navigation */
+        header {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            width: 100%;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo-section span {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .user-icons {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .notification-icon {
+            font-size: 1.25rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Profile Section */
+        .profile-icon {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .profile-icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.8);
+            transition: transform 0.2s;
+        }
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 120%;
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            width: 300px;
+            padding: 1.5rem;
+            z-index: 100;
+        }
+
+        .profile-icon:hover .profile-dropdown {
+            display: block;
+        }
+
+        .profile-dropdown h4 {
+            color: #1e293b;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .profile-dropdown p {
+            color: #64748b;
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+        }
+
+        .profile-dropdown a {
+            display: block;
+            margin-top: 1rem;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .profile-dropdown a:hover {
+            color: #1d4ed8;
+        }
+
+        /* Main Container */
+        .container {
+            
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            color: #1e293b;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+/* General Glass Effect Styling */
+.glass {
+    background: rgba(255, 255, 255, 0); /* Fully transparent background */
+    backdrop-filter: blur(10px); /* Glass-like blur */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+}
+
+/* Doctor Dashboard Styling */
+.doctor-dashboard {
+    padding: 30px;
+    margin-top: 20px;
+    color: #333;
+    text-align: center;
+    background: rgba(255, 255, 255, 0); /* Fully transparent background */
+    backdrop-filter: blur(12px); /* Maintain blur for glass effect */
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Appointment Cards */
+.appointment-card {
+    background: rgba(255, 255, 255, 0.7);  /* Semi-transparent background for glass effect */
+    backdrop-filter: blur(15px);  /* Glass-like blur effect */
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);  /* Soft shadow for depth */
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+/* Appointment Cards */
+.appointment-card-main {
+    background: rgba(255, 255, 255, 0.7);  /* Semi-transparent background for glass effect */
+    backdrop-filter: blur(15px);  /* Glass-like blur effect */
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);  /* Soft shadow for depth */
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.appointment-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+.appointment-card h3 {
+    background: rgba(255, 255, 255, 0); /* Fully transparent background */
+    backdrop-filter: blur(12px); /* Maintain blur for glass effect */
+    font-size: 1.25rem;
+    color: #2563eb;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.appointment-card h4 {
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
+}
+
+.appointment-card p {
+    background: rgba(255, 255, 255, 0); /* Fully transparent background */
+    backdrop-filter: blur(12px); /* Maintain blur for glass effect */
+    font-size: 1rem;
+    color: #64748b;
+    margin: 0.5rem 0;
+}
+
+/* Status Tags */
+.status-tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin: 1rem 0;
+    background: rgba(255, 255, 255, 0.6);  /* Semi-transparent background */
+    backdrop-filter: blur(10px);  /* Glass-like blur effect */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow for floating effect */
+}
+
+/* Status-Specific Tags */
+.status-Scheduled {
+    background-color: rgba(219, 234, 254, 0.7); /* Light blue with transparency */
+    color: #1d4ed8;
+}
+
+.status-Accepted {
+    background-color: rgba(220, 252, 231, 0.7); /* Light green with transparency */
+    color: #15803d;
+}
+
+.status-Cancelled {
+    background-color: rgba(254, 226, 226, 0.7); /* Light red with transparency */
+    color: #b91c1c;
+}
+
+
+/* Buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.btn {
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.btn-view-details {
+    background-color: #2563eb;
+    color: white;
+}
+
+.btn-view-details:hover {
+    background-color: #1d4ed8;
+}
+
+.btn-accept {
+    background-color: #22c55e;
+    color: white;
+}
+
+.btn-accept:hover {
+    background-color: #16a34a;
+}
+
+.btn-cancel {
+    background-color: #ef4444;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #dc2626;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    width: 90%;
+    max-width: 700px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+    color: #1e293b;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.close-modal {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.25rem;
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #64748b;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-modal:hover {
+    color: #1e293b;
+}
+
+
+        .patient-modal-details {
+            background-color: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .patient-modal-details h5 {
+            color: #1e293b;
+            margin: 1rem 0 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .patient-modal-details p {
+            margin: 0.75rem 0;
+        }
+
+        .patient-modal-details ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .patient-modal-details li {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .patient-modal-details li:last-child {
+            border-bottom: none;
+        }
+
+        button {
+            background-color: #250d02;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #e55704;
+        }
+
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .modal-content {
+                margin: 10% 5%;
+                padding: 1.5rem;
+            }
+        }
+
+        .patient-data-analysis {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .patient-data-analysis:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+
+        .patient-data-analysis h3 {
+            font-size: 1.25rem;
+            color: #2563eb;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .patient-data-analysis iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 0.75rem;
+        }
+/* Styling for medication form container */
+.prediction-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background for glass effect */
+    backdrop-filter: blur(10px); /* Glass-like blur effect */
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Softer shadow for depth */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Subtle border for enhanced glass effect */
+}
+
+/* Customizing form elements */
+.medication-form {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #333; /* Ensure text readability */
+}
+
+/* Customize the submit button for better appeal */
+button[type="submit"] {
+    font-size: 1.1rem;
+    padding: 12px 25px;
+    background: linear-gradient(90deg, #007bff, #0056b3); /* Gradient for modern look */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Hover effect on submit button */
+button[type="submit"]:hover {
+    background: linear-gradient(90deg, #0056b3, #003d80);
+    transform: scale(1.02); /* Slight zoom-in effect */
+    cursor: pointer;
+}
+
+/* Adjust form fields */
+.form-control {
+    font-size: 1rem;
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.6); /* Semi-transparent background */
+    backdrop-filter: blur(5px); /* Light blur for glass effect */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Shadow for subtle elevation */
+    border: 1px solid rgba(200, 200, 200, 0.5); /* Soft border */
+    margin-bottom: 15px;
+}
+
+/* Textarea specific */
+textarea.form-control {
+    resize: vertical;
+    height: 150px;
+}
+
+/* Optional: Add focus effect to inputs */
+.form-control:focus {
+    outline: none;
+    border-color: #007bff; /* Highlight border on focus */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.4); /* Glow effect */
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .prediction-container {
+        padding: 20px;
+    }
+
+    .form-control {
+        font-size: 0.95rem;
+    }
+
+    button[type="submit"] {
+        font-size: 1rem;
+    }
+}
+/* Glass Effect for Researcher Section */
+.researcher {
+    background: rgba(219, 200, 200, 0.3); /* Light transparent background with a soft tint */
+    
+    backdrop-filter: blur(12px); /* Maintain blur for glass effect */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+/* Title Styling for Researcher Section */
+.researcher h2 {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff; /* Adjust title color for readability */
+}
+
+/* Research Post Styling with Glass Effect */
+.research-post {
+
+    color: #e819a7; /* Text color */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow for depth */
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Subtle border for definition */
+}
+
+/* Hover effect for research posts */
+.research-post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Title in research post */
+.research-post h3 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #6c0af5; /* Accent color */
+    margin-bottom: 15px;
+}
+
+/* Content text in research post */
+.research-post p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #9c0d5e; /* Adjusted for better readability on glass */
+}
+
+/* Date text */
+.research-post .date {
+    font-size: 14px;
+    color: #e8ce0c;
+    text-align: right;
+}
+
+/* No posts message */
+.researcher p {
+    text-align: center;
+    font-size: 18px;
+    color: rgba(226, 7, 255, 0.6); /* Subtle message styling */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .researcher {
+        padding: 20px;
+    }
+
+    .research-post {
+        padding: 15px;
+    }
+}
+
+
+/* Container for Patient Data Analyser */
+.patient-data-analyser {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Appointment Card for Patient Data Analysis */
+.patient-data-analysis {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+/* Hover Effect for Appointment Card */
+.patient-data-analysis:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Header Styling */
+.patient-data-analysis h3 {
+    font-size: 1.5rem;
+    color: #1e293b;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.75rem;
+}
+
+/* Iframe Styling */
+.patient-data-analysis iframe {
+    width: 100%;
+    height: 600px;
+    border-radius: 1rem;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .patient-data-analyser {
+        padding: 1rem;
+    }
+
+    .patient-data-analysis iframe {
+        height: 400px;
+    }
+}
+
+        
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo-section">
+                <i class="fas fa-heartbeat" style="font-size: 1.75rem;"></i>
+                <span>MedExpert</span>
+            </a>
+            <div class="user-icons">
+                <i class="fas fa-bell notification-icon">
+                    {% if unread_notifications_count > 0 %}
+                        <span class="notification-count">{{ unread_notifications_count }}</span>
+                    {% endif %}
+                </i>
+                <div class="profile-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/512/9203/9203764.png" alt="Profile Icon">
+                    <div class="profile-dropdown">
+                        <h4>{{ profile.full_name }}</h4>
+                        <p><strong>License Number:</strong> {{ profile.license_number }}</p>
+                        <p><strong>Specialization:</strong> {{ profile.specialization }}</p>
+                        <p><strong>Hospital:</strong> {{ profile.hospital }}</p>
+                        <a href="{% url 'core:edit_doctor_profile' %}">Edit Profile →</a> <!-- Updated link -->
+                    </div>
+                </div>
+                
+                <a href="{% url 'core:logout' %}" class="text-white text-decoration-none">
+                    <button type="button" class="btn btn-danger">
+                        Logout
+                    </button>
+                </a>
+                
+            </div>
+            
+        </nav>
+    </header>
+
+    <div class="doctor-dashboard">
+        <h1>Welcome, Dr. {{ profile.full_name }}</h1>
+    
+        <div class="appointment-card">
+            <h3>Upcoming Appointments</h3>
+<div class="appointments-container">
+    {% for detail in appointment_details %}
+        <div class="appointment-card">
+            <h4>Appointment with {{ detail.patient_profile.user.first_name }} {{ detail.patient_profile.user.last_name }}</h4>
+            <p>Date: {{ detail.appointment.appointment_date|date:"Y-m-d H:i" }}</p>
+
+            <!-- View Details Button -->
+            <button class="btn btn-view-details" onclick="openModal('modal-{{ detail.appointment.id }}')">
+                View Patient Details
+            </button>
+
+            <!-- Appointment Status and Action Buttons -->
+            <div>
+                <span class="status-tag status-{{ detail.appointment.status }}">
+                    {{ detail.appointment.status }}
+                </span>
+                <div class="action-buttons">
+                    {% if detail.appointment.status == "Scheduled" %}
+                        <form action="{% url 'core:accept_appointment' appointment_id=detail.appointment.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-accept">Accept</button>
+                        </form>
+                        <form action="{% url 'core:cancel_appointment' appointment_id=detail.appointment.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-cancel">Cancel</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Modal for Patient Details -->
+            <div class="container">
+                <div id="modal-{{ detail.appointment.id }}" class="modal">
+                    <div class="modal-content">
+                        <span class="close-modal" onclick="closeModal('modal-{{ detail.appointment.id }}')">&times;</span>
+                        <h2>Patient Details</h2>
+                        <div class="patient-modal-details">
+                            <p><strong>Name:</strong> {{ detail.patient_profile.user.first_name }} {{ detail.patient_profile.user.last_name }}</p>
+                            <p><strong>Gender:</strong> {{ detail.patient_profile.gender }}</p>
+                            <p><strong>Age:</strong> {{ detail.patient_profile.age }}</p>
+                            <p><strong>Address:</strong> {{ detail.patient_profile.address }}</p>
+                            <p><strong>Medical History:</strong> {{ detail.patient_profile.medical_history }}</p>
+
+                            <h5>Reported Issues/Diseases:</h5>
+                            <ul>
+                                {% for issue in detail.issues %}
+                                    <li>
+                                        <strong>Issue:</strong> {{ issue.description }}
+                                        {% if issue.report %}
+                                            <br>
+                                            <strong>Report:</strong> 
+                                            <a href="{{ issue.report.url }}" target="_blank" class="btn btn-view-details">
+                                                View Report
+                                            </a>
+                                        {% endif %}
+                                    </li>
+                                {% empty %}
+                                    <li>No reported issues or diseases.</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>No appointments available at the moment.</p>
+    {% endfor %}
+</div>
+
+
+    </div>
+    
+    
+
+<!-- New Section for Patient Data Analysis -->
+<div class="patient-data-analyser">
+    <div class="patient-data-analysis appointment-card">
+        <h3>Patient Data Analysis</h3>
+        <iframe src="http://localhost:8502/" frameborder="0"></iframe>
+    </div>
+</div>
+
+
+    <hr><br><br>
+
+
+        <!-- New Section for Patient Data Analysis -->
+<div class="patient-data-analyser">
+    <div class="patient-data-analysis appointment-card">
+        <h3>Patient Disease Analyser
+        </h3>
+        <iframe src="http://localhost:8501/" frameborder="0"></iframe>
+    </div>
+</div>
+<hr><br><br>
+
+    <!-- New Section for Patient Data Analysis 
+<div class="patient-data-analyser">
+    <div class="patient-data-analysis appointment-card">
+        <h3> Medical Report Generate
+        </h3>
+        <iframe src="http://localhost:8503/" frameborder="0"></iframe>
+    </div>
+</div>
+<hr><br><br> -->
+   
+<!-- Medication form for doctor to prescribe medication -->
+<div class="container prediction-container">
+    <h3 class="text-center mb-4 text-primary font-weight-bold">Prescribe Medication</h3> 
+
+    <form method="POST" class="appointment-card mt-5 p-4 rounded shadow-lg bg-light">
+        {% csrf_token %}
+        
+        <!-- Medication Form Fields -->
+        <div class="medication-form">
+            
+            <div class="form-group">
+                {{ medication_form.name }}
+            </div>
+            <div class="form-group">
+                {{ medication_form.dosage }}
+            </div>
+            <div class="form-group">
+                {{ medication_form.frequency }}
+            </div>
+            <div class="form-group">
+                {{ medication_form.instructions }}
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-lg px-5 py-3">Prescribe Medication</button>
+        </div>
+    </form>
+</div>
+
+
+<br><br>
+<hr>
+<br><br>
+
+
+
+<div class="container">
+     <!-- Patient Appointment Details and Medications -->
+     {% for detail in appointment_details %}
+     <div class="patient-info appointment-card">
+         <h4>Patient: {{ detail.patient_profile.full_name }}</h4>
+
+         <!-- Medications section -->
+         <h5>Prescribed Medications:</h5>
+         <ul class="container">
+             {% for medication in detail.medications %}
+                 <li>
+                     <strong>Medication:</strong> {{ medication.name }}<br>
+                     <strong>Dosage:</strong> {{ medication.dosage }}<br>
+                     <strong>Frequency:</strong> {{ medication.frequency }}<br>
+                     <strong>Instructions:</strong> {{ medication.instructions }}
+                 </li>
+             {% empty %}
+                 <li>No medications prescribed.</li>
+             {% endfor %}
+         </ul>
+     </div>
+ {% endfor %}
+</div>
+
+
+</div>
+<br><br><hr>
+
+<div class="container mt-5">
+    <!-- Researcher Section -->
+    <div class="researcher glass p-4 rounded shadow-lg">
+        <h2 class="text-center  mb-4 font-weight-bold">Recent Research Updates</h2>
+        
+        {% for post in research_posts %}
+            <div class="research-post glass mb-4 p-4 rounded shadow-sm">
+                <h3 class=" font-weight-bold">{{ post.title }}</h3>
+                <p class="">{{ post.content }}</p>
+                <p class="date text-right  mt-3">Posted on: {{ post.created_at|date:"F j, Y" }}</p>
+            </div>
+        {% empty %}
+            <p class="text-center text-muted">No research posts yet. Start sharing your findings!</p>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+<!-- Notification Section -->
+ <div class="container">
+<div id="notificationDropdown" class="notification-dropdown appointment-card">
+    <h4>Notifications</h4>
+    {% for notification in notifications %}
+        <div class="notification-item {% if not notification.is_read %} unread {% endif %}">
+            <p>{{ notification.message }}</p>
+            <small>{{ notification.created_at|date:"F j, Y, g:i a" }}</small>
+        </div>
+    {% empty %}
+        <p>No notifications</p>
+    {% endfor %}
+</div>
+</div>
+<!-- Existing Doctor Dashboard Content -->
+<!-- Include the existing content for appointments, medication form, etc. -->
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.getElementsByClassName('modal');
+                for (let modal of modals) {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            }
+        });
+    </script>
+    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

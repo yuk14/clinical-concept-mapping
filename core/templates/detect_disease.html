@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detect Disease</title>
+    <link rel="stylesheet" href="path/to/your/styles.css">  <!-- Link your CSS file here -->
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'core:home' %}">Home</a></li>
+                <li><a href="{% url 'core:doctor_dashboard' %}">Doctor Dashboard</a></li>
+                <li><a href="{% url 'core:sign_out' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+        <h2>Detect Disease Based on Symptoms</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <div>
+                <label for="symptoms">Enter Symptoms:</label>
+                <textarea id="symptoms" name="symptoms" rows="4" placeholder="Describe your symptoms here..."></textarea>
+            </div>
+            
+            <div>
+                <button type="submit">Detect Disease</button>
+            </div>
+        </form>
+
+        {% if disease %}
+        <h3>Detected Disease:</h3>
+        <p>{{ disease }}</p>
+        {% endif %}
+        
+        {% if error %}
+        <p style="color:red;">{{ error }}</p>
+        {% endif %}
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Your Medical App. All rights reserved.</p>
+    </footer>
+</body>
+</html>
